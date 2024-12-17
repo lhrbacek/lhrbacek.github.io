@@ -200,12 +200,12 @@ function draw() {
   //traceLayer.background(20, 20, 20);
   for (let tram of trams) {
     tram.showTraces();
-    tram.show();
+    //tram.show();
   }
   //image(traceLayer, 0, 0);
-  // for (let tram of trams) {
-  //   tram.show();
-  // }
+  for (let tram of trams) {
+    tram.show();
+  }
   
   if (frameCount % 5400 === 0) {
     console.log(`trams amount: ${trams.length}`)
