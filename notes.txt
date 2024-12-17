@@ -1,0 +1,9 @@
+
+Lines:
+https://data.brno.cz/datasets/mestobrno::veden%C3%AD-linek-mhd-public-transit-routes/about
+
+Trams:
+https://gis.brno.cz/esri/home/item.html?id=e8aa121910df41bb9a28e4ca34a263c7
+
+//{"geometry":{"x":16.678736,"y":49.168465,"spatialReference":{"wkid":4326}},"attributes":{"id":"2640","vtype":2,"ltype":2,"lat":49.168465,"lng":16.678736,"bearing":45,"lineid":77,"linename":"77","routeid":4037,"course":"04411","lf":"true","delay":0,"laststopid":1581,"finalstopid":1716,"isinactive":"false","lastupdate":1732470253919,"globalid":"{703051CF-1950-8DFC-A892-51AEF4880A8F}"}}
+
