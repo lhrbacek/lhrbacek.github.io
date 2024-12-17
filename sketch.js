@@ -85,8 +85,8 @@ function readMessage(event) {
 }
 
 function coordsToCanvas(coords) {
-  let x = map(coords[0], 16.50, 16.70, 0, canvasWidth, true);
-  let y = map(coords[1], 49.125, 49.25, canvasHeight, 0, true);
+  let x = map(coords[0], 16.50, 16.70, mappedWidthMin, mappedWidthMax, true);
+  let y = map(coords[1], 49.125, 49.25, mappedHeightMax, mappedHeightMin, true);
   return [floor(x), floor(y)];
 }
 
@@ -112,6 +112,13 @@ function checkSleepingTrams() {
   }
   //save(`heartbeat_of_brno_${img_count}`);
   //img_count++;
+}
+
+function setMappedBorders() {
+  mappedWidthMin = canvasWidth / 2 - mapWidth / 2;
+  mappedWidthMax = canvasWidth / 2 + mapWidth / 2;
+  mappedHeightMin = canvasHeight / 2 - mapHeight / 2; 
+  mappedHeightMax = canvasHeight / 2 + mapHeight /2;
 }
 
 // const colors = new Map([
@@ -145,8 +152,14 @@ const rgbColor = new Map([
 ]);
 
 let fr;
-let canvasWidth = 800;
-let canvasHeight = 800;
+let canvasWidth = 1920;
+let canvasHeight = 1080;
+let mapWidth = 800;
+let mapHeight = 800;
+let mappedWidthMin = 0;
+let mappedHeightMin = 0;
+let mappedWidthMax = 0;
+let mappedHeightMax = 0;
 let host = 'gis.brno.cz/geoevent/ws/services/ODAE_public_transit_stream/StreamServer/subscribe?outSR=4326';
 let socket; // the websocket
 let routesGeoJSON;
@@ -164,6 +177,7 @@ function preload() {
 function setup() {
   createCanvas(canvasWidth, canvasHeight);
   frameRate(30);
+  setMappedBorders();
 
   //traceLayer = createGraphics(width, height);
   //traceLayer.background(20, 20, 20);
@@ -178,7 +192,7 @@ function setup() {
   // socket message listener:
   socket.onmessage = readMessage;
 
-  fr = createP('');
+  //fr = createP('');
 }
 
 function draw() {
@@ -197,5 +211,5 @@ function draw() {
     console.log(`trams amount: ${trams.length}`)
     checkSleepingTrams();
   }
-  fr.html(floor(frameRate()));
+  //fr.html(floor(frameRate()));
 }

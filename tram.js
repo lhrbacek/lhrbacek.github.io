@@ -55,7 +55,7 @@ class Tram {
   }
 
   inCenter(coords) {
-    return dist(440, 350, coords[0], coords[1]) <= 50;
+    return dist(mapWidth * 0.55 + mappedWidthMin, mapHeight * 0.4375 + mappedHeightMin, coords[0], coords[1]) <= 50;
   }
 
   heartbeatPulse(frame) {
