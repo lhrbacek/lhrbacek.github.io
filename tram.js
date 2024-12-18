@@ -9,6 +9,7 @@ class Tram {
     this.intervalFrameCount = frameCount + 300;
     this.lastUpdateFrame = frameCount;
     this.lastDrawnAngle = 0;
+    this.lastDrawnColor = [200, 50, 50];
     this.traces = [];
     this.isSleeping = true;
   }
@@ -82,6 +83,9 @@ class Tram {
   }
 
   show() {
+    if (this.isSleeping) {
+      return;
+    }
     // Calculate normalized progress after the delay
     let t = constrain((frameCount - this.intervalFrameCount + 300) / 300, 0, 1);
 
@@ -97,39 +101,62 @@ class Tram {
       this.traces.push({x: x, y: y});
       this.lastCoordsDrawn = [x, y];
     }
-
-    let angle = atan2(this.currCoordsCanvas[1] - this.lastCoordsCanvas[1], this.currCoordsCanvas[0] - this.lastCoordsCanvas[0]);
-    if (angle === 0) {
-      angle = this.lastDrawnAngle;
-    }
-    this.lastDrawnAngle = angle;
     
     let pulse = 25
     let minPulse = 4;
     let maxPulse = 20;
     let stepPulse = 2;
-    if (!this.isSleeping) {
-      push();
-      translate(x, y); // Move to the tram's position
 
-      if (this.inCenter([x, y])) {
-        pulse = this.heartbeatPulse(frameCount);
-        minPulse = 8;
-        maxPulse = 40;
-        stepPulse = 3;
-      }
-      for (let i = minPulse; i <= maxPulse; i += stepPulse) { // Layers of the glow
-        fill(220, 180, 180, map(i, 4, pulse, 60, 0));
-        noStroke();
-        ellipse(0, 0, i, i); // Expanding circle
-      }
+    push();
+    translate(x, y); // Move to the tram's position
 
-      rotate(angle);   // Rotate to match the direction
-      fill(180, 50, 50); // Red tram
-      noStroke();
-      // Draw a triangle pointing right
-      triangle(-5, -5, -5, 5, 7, 0); // Adjust size as needed
-      pop();
+    if (this.inCenter([x, y])) {
+      pulse = this.heartbeatPulse(frameCount);
+      minPulse = 8;
+      maxPulse = 40;
+      stepPulse = 3;
     }
+    for (let i = minPulse; i <= maxPulse; i += stepPulse) { // Layers of the glow
+      fill(220, 180, 180, map(i, 4, pulse, 60, 0));
+      noStroke();
+      ellipse(0, 0, i, i); // Expanding circle
+    }
+
+    let angleMov = atan2(this.currCoordsCanvas[1] - this.lastCoordsDrawn[1], this.currCoordsCanvas[0] - this.lastCoordsDrawn[0]);
+    if (angleMov === 0) {
+      angleMov = this.lastDrawnAngle;
+    }
+    this.lastDrawnAngle = angleMov;
+    // let angleCenter = atan2(centerCoords[1] - this.lastCoordsDrawn[1], centerCoords[0] - this.lastCoordsDrawn[0]);
+    // // Determine if moving toward or away from center
+    // if (abs(angleMov - angleCenter) < PI / 2) {
+    //   fill(50, 50, 200);
+    // } else {
+    //   fill(200, 50, 50);
+    // }
+
+    // let vectorToCenter = createVector(centerCoords[0] - this.lastCoordsDrawn[0], centerCoords[1] - this.lastCoordsDrawn[1]);
+    // // Tram's movement vector
+    // let movementVector = createVector(this.currCoordsCanvas[0] - this.lastCoordsDrawn[0], this.currCoordsCanvas[1] - this.lastCoordsDrawn[1]);
+    // // Calculate the dot product
+    // let dotProduct = vectorToCenter.dot(movementVector);
+    // // Determine color based on dot product
+    // //let tramColor = dotProduct > 0 ? color(0, 0, 255) : color(255, 0, 0); // Blue (toward) or Red (away)
+    // if (dotProduct > 0) {
+    //   fill(50, 50, 200);
+    //   this.lastDrawnColor = [50,50,200];
+    // } else if (dotProduct < 0){
+    //   fill(200, 50, 50);
+    //   this.lastDrawnColor = [200,50,50];
+    // } else {
+    //   fill(this.lastDrawnColor[0], this.lastDrawnColor[1], this.lastDrawnColor[2]);
+    // }
+
+    rotate(angleMov);   // Rotate to match the direction
+    fill(180, 50, 50); // Red tram
+    noStroke();
+    // Draw a triangle pointing right
+    triangle(-5, -5, -5, 5, 7, 0); // Adjust size as needed
+    pop();
   }
 }

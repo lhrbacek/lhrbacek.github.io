@@ -121,6 +121,11 @@ function setMappedBorders() {
   mappedHeightMax = canvasHeight / 2 + mapHeight /2;
 }
 
+function intro() {
+  trams.push(new Tram(0, 0, 0, [0,500]));
+  updateTram(0, [canvasWidth,500]);
+}
+
 // const colors = new Map([
 //   [1, '#FF0202'],
 //   [2, '#FF1717'],
@@ -168,6 +173,7 @@ let boundariesLng = [16.507, 16.693]
 let trams = [];
 let tramsid = [];
 let img_count = 0;
+let centerCoords = [];
 
 // Load the text and create an array. TODO remove when not needed
 function preload() {
@@ -178,6 +184,7 @@ function setup() {
   createCanvas(canvasWidth, canvasHeight);
   frameRate(30);
   setMappedBorders();
+  centerCoords = [mapWidth * 0.55 + mappedWidthMin, mapHeight * 0.45 + mappedHeightMin];
 
   //traceLayer = createGraphics(width, height);
   //traceLayer.background(20, 20, 20);
@@ -193,6 +200,7 @@ function setup() {
   socket.onmessage = readMessage;
 
   //fr = createP('');
+  intro();
 }
 
 function draw() {
@@ -217,4 +225,8 @@ function draw() {
   //   img_count++;
   // }
   //fr.html(floor(frameRate()));
+  //circle(centerCoords[0], centerCoords[1], 50);
+  if (frameCount === 390) {
+    trams.shift();
+  }
 }
