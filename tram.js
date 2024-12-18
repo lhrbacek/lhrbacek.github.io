@@ -37,7 +37,7 @@ class Tram {
     if (this.traces.length > 0)
       //traceLayer.curveVertex(this.traces[0].x, this.traces[0].y);
       curveVertex(this.traces[0].x, this.traces[0].y);
-    for (let i = 0; i < this.traces.length; i += 50) {
+    for (let i = 0; i < this.traces.length; i += 40) {
       //traceLayer.curveVertex(this.traces[i].x, this.traces[i].y);
       curveVertex(this.traces[i].x, this.traces[i].y);
     }
@@ -55,7 +55,7 @@ class Tram {
   }
 
   inCenter(coords) {
-    return dist(mapWidth * 0.55 + mappedWidthMin, mapHeight * 0.4375 + mappedHeightMin, coords[0], coords[1]) <= 50;
+    return dist(mapWidth * 0.55 + mappedWidthMin, mapHeight * 0.45 + mappedHeightMin, coords[0], coords[1]) <= 40;
   }
 
   heartbeatPulse(frame) {

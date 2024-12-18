@@ -154,8 +154,8 @@ const rgbColor = new Map([
 let fr;
 let canvasWidth = 1920;
 let canvasHeight = 1080;
-let mapWidth = 800;
-let mapHeight = 800;
+let mapWidth = 1000;
+let mapHeight = 1000;
 let mappedWidthMin = 0;
 let mappedHeightMin = 0;
 let mappedWidthMax = 0;
@@ -196,7 +196,7 @@ function setup() {
 }
 
 function draw() {
-  background(20, 20, 20);
+  background(0);
   //traceLayer.background(20, 20, 20);
   for (let tram of trams) {
     tram.showTraces();
@@ -211,5 +211,10 @@ function draw() {
     console.log(`trams amount: ${trams.length}`)
     checkSleepingTrams();
   }
+  // captures images every frame up to 40 seconds
+  // if (frameCount > 3600 && frameCount < 4800) {
+  //   save(`heartbeat_of_brno_${img_count}`);
+  //   img_count++;
+  // }
   //fr.html(floor(frameRate()));
 }
